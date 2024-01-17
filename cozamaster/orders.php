@@ -26,20 +26,15 @@ include("header.php")
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
-								<th class="column-5">order ID</th>
-
-									<th class="column-1 ">Product id</th>
+							
+								<th class="column-1 ">Order id</th>
+								
 									<th class="column-2">user id</th>
-									<th class="column-3">Product name</th>
-									<th class="column-6">price</th>
+						
 
-									<th class="column-7 ">quantity</th>
-									<th class="column-8 ">username</th>
-									<th class="column-9 ">useremail</th>
-									<th class="column-10 ">usernum</th>
-
-									<th class="column-11 ">delivery address</th>
-									<th class="column-12 ">order date</th>
+									<th class="column-8 ">productQuantity</th>
+									<th class="column-9 ">Total Amount</th>
+									<th class="column-9 ">Date</th>
 
 
 
@@ -50,41 +45,27 @@ include("header.php")
 <?php  
 if(isset($_SESSION['userid'])){
 	$usid=$_SESSION['userid'];
-$query=$pdo->prepare('select * from orders where userid =:uride');
+$query=$pdo->prepare('SELECT *,COUNT(productid) pid ,SUM(productquantity*productprice) sumorder FROM `orders` WHERE userid=:uride GROUP by date');
 $query->bindParam('uride',$usid);
 $query->execute();
 $row=$query->fetchAll(PDO::FETCH_ASSOC);
-foreach($row as $ordv){ ?>
+
+foreach($row as $ordv){ 
+
+	?>
 
 								<tr class="table_row">
 									<td class="column-5"><?php echo $ordv['orderid'] ?></td>
 									
-									<td class="column-1">
-										<?php echo $ordv['productid'] ?>
-									</td>
+									
 									<td class="column-2"><?php echo $ordv['userid'] ?></td>
-									<td class="column-3"><?php echo $ordv['productname'] ?></td>
-									<td class="column-4">
-										<?php echo $ordv['productprice'] ?>
-									</td>
-									<td class="column-6 ">
-										<?php echo $ordv['productquantity'] ?>
-									</td>
-									<td class="column-7 ">
-										<?php echo $ordv['username'] ?>
-									</td>
-									<td class="column-8 ">
-										<?php echo $ordv['useremail'] ?>
-									</td>
-									<td class="column-9 ">
-										<?php echo $ordv['usernum'] ?>
-									</td>
-									<td class="column-10 ">
-										<?php echo $ordv['useraddress'] ?>
-									</td>
-									<td class="column-11 ">
-										<?php echo $ordv['date'] ?>
-									</td>
+									<td class="column-3"><?php echo $ordv['pid'] ?></td>
+									
+									<td class="column-3"><?php echo $ordv['sumorder'] ?></td>
+									<td class="column-3"><?php echo $ordv['date'] ?></td>
+
+									
+						
 									
 									
 

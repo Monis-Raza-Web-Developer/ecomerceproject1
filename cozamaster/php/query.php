@@ -48,13 +48,14 @@ if(isset($_POST['signup'])){
     $name =$_POST['name'];
     $em =$_POST['uemai'];
     $upas =$_POST['upass'];
-    $query=$pdo->prepare('insert into users (name,email,passwords)values(=:pn,=:pem,=:ps)');
+    $query=$pdo->prepare('insert into users (name,email,passwords)values(:pn,:pem,:ps)');
     $query->bindParam('pn',$name);
     $query->bindParam('pem',$em);
     $query->bindParam('ps',$upas);
     $query->execute();
 
-
+    echo"<script>alert('sign up succesfull');
+    location.assign('login.php')</script>";
 }
 
 // log in
@@ -79,6 +80,7 @@ if(isset($_POST['login'])){
 
            // insert review
     if(isset($_POST['reve'])){
+        if(isset($_SESSION['useremail'])){
         $rud=$_SESSION['userid'];
         $review=$_POST['revei'];
         $urn=$_POST['uen'];
@@ -95,7 +97,11 @@ if(isset($_POST['login'])){
         echo "<script>alert('your review added');
         </script>";
 
+        }else{
+            echo "<script>alert ('please log in first');
+            location.assign('login.php')</script>";
         }
+    }
         
      
     

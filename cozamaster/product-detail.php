@@ -326,10 +326,15 @@ foreach($row as $rowrev){
 												<?php echo $rowrev['review'] ?>
 													
 												</p>
+												<?php if(isset($_SESSION['userid'])){ 
+													 
+													  $query=$pdo->query('select * from reviews where userid = rid');
+													;?>
 												<form action="" method="post">
 													<input type="hidden" value="<?php  echo $rowrev['rid']?>" name="delt">
 													<button name="deltrev" type="submit">delete</button> 
 												</form>
+												<?php  }?>
 
 	                  
 
@@ -373,31 +378,26 @@ foreach($row as $rowrev){
 													<label class="stext-102 cl3" for="review">Your review</label>
 													<textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="revei"></textarea>
 												</div>
-
+                                               <?php
+											   if(isset($_SESSION['useremail'])){ ?>
 												<div class="col-sm-6 p-b-5">
 													<label class="stext-102 cl3" for="name">Name</label>
-													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="uen" value=" ">
+													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="uen" value=" <?php echo $_SESSION ['username'] ?>">
 												</div>
 
 												<div class="col-sm-6 p-b-5">
 													<label class="stext-102 cl3" for="email" >Email</label>
-													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="ueemail" value="">
+													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="ueemail" value="<?php echo $_SESSION ['useremail'] ?>">
 												</div>
 											</div>
-
-											<?php 
-											if(isset($_SESSION['useremail'])){?>
+<?php  }
+?>
+											
+											
 												<button type="submit" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10" name="reve">
 												Submit
 											</button>
-									<?php		}else{ ?>
-										<button  class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10" name="">
-												<a href="login.php" >Submit</a>
-											</button><?php
-											
-										}
-											
-											?>
+									
 										</form>
 									</div>
 								</div>
